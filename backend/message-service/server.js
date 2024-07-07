@@ -22,12 +22,7 @@ app.use(express.json()); //per fare il parsing tra le richieste che arrivano con
   })
 );*/
 
-//const cors = require('cors');
-app.use(
-  cors({
-    origin: 'https://progettosad-3.onrender.com',
-  })
-);
+app.use(cors());
 
 app.use(cookieParser());
 
