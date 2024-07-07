@@ -1,0 +1,15 @@
+# ignore backend node-modules
+/backend/authentication-service/node_modules/
+/backend/user-service/node_modules/
+/backend/message-service/node_modules/
+
+# ignore frontend node-modules
+/frontend/node_modules/
+
+# ignore .env files
+/backend/authentication-service/.env
+/backend/user-service/.env
+/backend/message-service/.env
+
+# ignore .vscode setting files
+/.vscode/
