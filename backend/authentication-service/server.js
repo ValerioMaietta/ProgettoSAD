@@ -22,12 +22,12 @@ app.use(cors({
   credentials: true,
 }));*/
 
-const cors = require('cors');
+/*const cors = require('cors');
 app.use(
   cors({
     origin: 'https://progettosad-ughz.onrender.com',
   })
-);
+);*/
 
 app.use('/api/auth', authRoutes);
 

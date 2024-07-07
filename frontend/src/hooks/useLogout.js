@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
-import toast from "react-hot-toast";
+import { useState } from 'react';
+import { useAuthContext } from '../context/AuthContext';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import config from '../config'; // Importa il file di configurazione degli endpoint
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
@@ -9,16 +11,19 @@ const useLogout = () => {
   const logout = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8090/api/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
+      const res = await axios.post(
+        `${config.authServiceUrl}/api/auth/logout`,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      if (res.data.error) {
+        throw new Error(res.data.error);
       }
 
-      localStorage.removeItem("chat-user");
+      localStorage.removeItem('chat-user');
       setAuthUser(null);
     } catch (error) {
       toast.error(error.message);
@@ -29,4 +34,5 @@ const useLogout = () => {
 
   return { loading, logout };
 };
+
 export default useLogout;

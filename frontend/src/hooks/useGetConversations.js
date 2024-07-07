@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import config from '../config';
+import axios from 'axios';
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState(false);
@@ -9,18 +11,16 @@ const useGetConversations = () => {
     const getConversations = async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:10000/api/users", {
-          method: "GET",
+        const res = await axios.get(`${config.userServiceUrl}/api/users`, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-          credentials: "include",
+          withCredentials: true, // Questo sostituisce 'credentials: include' di fetch
         });
-        const data = await res.json();
-        if (data.error) {
-          throw new Error(data.error);
+        if (res.data.error) {
+          throw new Error(res.data.error);
         }
-        setConversations(data);
+        setConversations(res.data);
       } catch (error) {
         toast.error(error.message);
       } finally {
@@ -33,4 +33,5 @@ const useGetConversations = () => {
 
   return { loading, conversations };
 };
+
 export default useGetConversations;

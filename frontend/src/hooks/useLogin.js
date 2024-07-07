@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import config from '../config'; // Importa il file di configurazione degli endpoint
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -11,20 +13,21 @@ const useLogin = () => {
     if (!success) return;
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8090/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials:"include",
-        body: JSON.stringify({ username, password }),
-      });
+      const res = await axios.post(
+        `${config.authServiceUrl}/api/auth/login`,
+        { username, password },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
 
-      const data = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
+      if (res.data.error) {
+        throw new Error(res.data.error);
       }
 
-      localStorage.setItem('chat-user', JSON.stringify(data));
-      setAuthUser(data);
+      localStorage.setItem('chat-user', JSON.stringify(res.data));
+      setAuthUser(res.data);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -34,6 +37,7 @@ const useLogin = () => {
 
   return { loading, login };
 };
+
 export default useLogin;
 
 function handleInputErrors(username, password) {
