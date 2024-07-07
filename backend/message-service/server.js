@@ -15,13 +15,20 @@ const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json()); //per fare il parsing tra le richieste che arrivano con il payload JSON (da req.body nel controller)
-app.use(
+/*app.use(
   cors({
     origin: 'http://localhost:3000',
-
     credentials: true,
   })
+);*/
+
+const cors = require('cors');
+app.use(
+  cors({
+    origin: 'https://progettosad-ughz.onrender.com',
+  })
 );
+
 app.use(cookieParser());
 
 app.use('/api/messages', messageRoutes);

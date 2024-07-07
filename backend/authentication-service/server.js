@@ -15,15 +15,19 @@ const app = express();
 app.use(express.json()); //per fare il parsing tra le richieste che arrivano con il payload JSON (da req.body nel controller)
 app.use(cookieParser());
 
-const allowedOrigins = ['http://localhost:3000']; // Replace with your frontend's origin
+/*const allowedOrigins = ['http://localhost:3000']; // Replace with your frontend's origin
 
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
-}));
+}));*/
 
-
-
+const cors = require('cors');
+app.use(
+  cors({
+    origin: 'https://progettosad-ughz.onrender.com',
+  })
+);
 
 app.use('/api/auth', authRoutes);
 
