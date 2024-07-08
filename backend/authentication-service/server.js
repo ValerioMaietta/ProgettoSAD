@@ -15,14 +15,16 @@ const app = express();
 app.use(express.json()); //per fare il parsing tra le richieste che arrivano con il payload JSON (da req.body nel controller)
 app.use(cookieParser());
 
-//const allowedOrigins = ['https://progettosad-3.onrender.com']; // Replace with your frontend's origin
+const allowedOrigins = ['https://progettosad-3.onrender.com']; // Replace with your frontend's origin
 
-/*app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-}));*/
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
-app.use(cors());
+//app.use(cors());
 
 app.use('/api/auth', authRoutes);
 

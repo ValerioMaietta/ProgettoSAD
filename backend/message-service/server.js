@@ -22,7 +22,16 @@ app.use(express.json()); //per fare il parsing tra le richieste che arrivano con
   })
 );*/
 
-app.use(cors());
+const allowedOrigins = ['https://progettosad-3.onrender.com']; // Replace with your frontend's origin
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+//app.use(cors());
 
 app.use(cookieParser());
 
