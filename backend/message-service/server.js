@@ -26,7 +26,7 @@ const allowedOrigins = ['https://progettosad-3.onrender.com']; // Replace with y
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: 'https://progettosad-3.onrender.com',
     credentials: true,
   })
 );
